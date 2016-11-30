@@ -9,9 +9,14 @@ import id.game.core.Constants;
 import id.game.core.GameObject;
 import id.game.main.GameA;
 import static id.game.main.GameA.HEIGHT;
+import id.sql.control.MatchHistoryBean;
+import id.sql.models.MatchHistory;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -105,11 +110,20 @@ public class Circle extends GameObject{
 					//Rest ball position
 					x = GameA.WIDTH/2;
 					y = GameA.HEIGHT/2;
+					//Increment score
 					scoreRight++;
+					//Run if Right side won.
 					if(scoreRight >= 3)
 					{
 						JOptionPane.showMessageDialog(null, "Right side won!");
-						//TO-DO : RESET TO MAIN MENU AND RUN DATABASE QUERY.
+						//Upload result to database
+						MatchHistory matchReport = new MatchHistory("Specter2k11","Specter2k12",/*User 3*/null,/*User 4*/null, scoreLeft, scoreRight);
+						try {
+							new MatchHistoryBean().insertMatchHistory(matchReport);
+						} catch (SQLException ex) {
+							Logger.getLogger(Circle.class.getName()).log(Level.SEVERE, null, ex);
+						}
+						//TO-DO : RESET TO MAIN MENU.
 					}
 					System.out.println("LEFT : " + scoreLeft + " | RIGHT : " + scoreRight);
 				}
@@ -121,11 +135,20 @@ public class Circle extends GameObject{
 					//Reset ball velocity
 					x = GameA.WIDTH/2;
 					y = GameA.HEIGHT/2;
+					//Increment score.
 					scoreLeft++;
+					//Run if Left side wins.
 					if(scoreLeft >= 3)
 					{
 						JOptionPane.showMessageDialog(null, "Left side won!");
-						//TO-DO : RESET TO MAIN MENU AND RUN DATABASE QUERY.
+						//Upload result to database
+						MatchHistory matchReport = new MatchHistory("Specter2k11","Specter2k12",/*User 3*/null,/*User 4*/null, scoreLeft, scoreRight);
+						try {
+							new MatchHistoryBean().insertMatchHistory(matchReport);
+						} catch (SQLException ex) {
+							Logger.getLogger(Circle.class.getName()).log(Level.SEVERE, null, ex);
+						}
+						//TO-DO : RESET TO MAIN MENU.
 					}
 					System.out.println("LEFT : " + scoreLeft + " | RIGHT : " + scoreRight);
 				}
