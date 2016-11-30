@@ -1,4 +1,4 @@
-package id.game.core;
+package core;
 
 import java.awt.Color;
 

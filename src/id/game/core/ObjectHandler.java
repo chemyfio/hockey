@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package id.game.core;
+package core;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;

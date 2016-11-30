@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package id.net;
+package net;
 
-import id.game.main.GameA;
+import main.GameA;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -20,9 +20,10 @@ public class SIOClient {
     Socket socket;
     GameA game;
 
-    public SIOClient() {
+    public SIOClient(GameA game) {
         try{
             socket = IO.socket("http://"+host);
+            this.game = game;
             socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
                 @Override
                 public void call(Object... os) {
@@ -49,12 +50,25 @@ public class SIOClient {
                 public void call(Object... os) {
                     System.out.println(Float.parseFloat(os[0].toString()));
                     System.out.println(os[1].toString());
-                    game.c1.setX(Float.parseFloat(os[0].toString()));
-                    System.out.println("X = "+game.c1.getX());
-                    game.c1.setY(Float.parseFloat(os[1].toString()));
-                    System.out.println("Y = "+game.c1.getY());
+                    game.c1.setVelX(Float.parseFloat(os[0].toString()));
+//                    System.out.println("X = "+game.c1.getX());
+                    game.c1.setVelY(Float.parseFloat(os[1].toString()));
+//                    System.out.println("Y = "+game.c1.getY());
                 }
             });
+            
+            socket.on("movingPaddle", new Emitter.Listener() {
+                @Override
+                public void call(Object... os) {
+                    System.out.println(Float.parseFloat(os[0].toString()));
+                    System.out.println(os[1].toString());
+                    game.b1.setVelX(Float.parseFloat(os[0].toString()));
+//                    System.out.println("X = "+game.c1.getX());
+                    game.b1.setVelY(Float.parseFloat(os[1].toString()));
+//                    System.out.println("Y = "+game.c1.getY());
+                }
+            });
+            
             socket.connect();
         }catch(Exception e){
             

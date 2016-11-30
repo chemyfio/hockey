@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package id.game.main;
+package main;
 
-import id.game.core.Constants;
-import id.game.core.GameObject;
-import id.game.core.KeyHandler;
-import id.game.core.ObjectHandler;
-import id.game.objects.Box;
-import id.game.objects.Circle;
-import id.game.objects.Wall;
-import id.net.SIOClient;
+import core.Constants;
+import core.GameObject;
+import core.KeyHandler;
+import core.ObjectHandler;
+import objects.Box;
+import objects.Circle;
+import objects.Wall;
+import net.SIOClient;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -38,20 +38,21 @@ public class GameA extends Canvas implements Runnable{
     
     public static GameA game;
     public Circle c1;
+    public Box b1;
     public static SIOClient sio;
     public void init(){
         //init()
         handler = new ObjectHandler();
         keyHandler = new KeyHandler(handler);
-        sio = new SIOClient();
+        sio = new SIOClient(game);
         
         c1 = new Circle(WIDTH/2, HEIGHT/2, 50, 50);
         
-        Box b1 = new Box(50, 50, 90, 90, GameObject.ObjectType.PLAYER, Constants.FUI_ALIZARIN);
-        Box b2 = new Box(WIDTH-100, 50, 90, 90, GameObject.ObjectType.PLAYER, Constants.FUI_AMETHYST);
+        b1 = new Box(50, 50, 90, 90, GameObject.ObjectType.PLAYER, Constants.FUI_ALIZARIN);
+        //Box b2 = new Box(WIDTH-100, 50, 90, 90, GameObject.ObjectType.PLAYER, Constants.FUI_AMETHYST);
         
-        Box b3 = new Box(50, HEIGHT-200, 90, 90, GameObject.ObjectType.PLAYER, Constants.FUI_ASBESTOS);
-        Box b4 = new Box(WIDTH-100, HEIGHT-200, 90, 90, GameObject.ObjectType.PLAYER, Constants.FUI_BELIZE_HOLE);
+        //Box b3 = new Box(50, HEIGHT-200, 90, 90, GameObject.ObjectType.PLAYER, Constants.FUI_ASBESTOS);
+        //Box b4 = new Box(WIDTH-100, HEIGHT-200, 90, 90, GameObject.ObjectType.PLAYER, Constants.FUI_BELIZE_HOLE);
         
         Wall wUp = new Wall(0, 0, WIDTH, 25, GameObject.ObjectType.WALL_UP);
         Wall wDown = new Wall(0, HEIGHT-25, WIDTH, 25, GameObject.ObjectType.WALL_DOWN);
@@ -62,9 +63,9 @@ public class GameA extends Canvas implements Runnable{
         
         handler.addObject(c1);
         handler.addObject(b1);
-        handler.addObject(b2);
-        handler.addObject(b3);
-        handler.addObject(b4);
+        //handler.addObject(b2);
+        //handler.addObject(b3);
+        //handler.addObject(b4);
         handler.addObject(wUp);
         handler.addObject(wDown);
         handler.addObject(wLeftUp);
