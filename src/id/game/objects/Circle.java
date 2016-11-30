@@ -12,6 +12,7 @@ import static id.game.main.GameA.HEIGHT;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,6 +22,8 @@ public class Circle extends GameObject{
 
     public float velX = 0f;
     public float velY = 0f;
+	public static int scoreLeft = 0;
+	public static int scoreRight = 0;
 
     public Circle(float x, float y, int w, int h) {
         super(x, y, w, h, GameObject.ObjectType.TYPE_CIRCLE);
@@ -94,12 +97,38 @@ public class Circle extends GameObject{
     public void checkOutOfScreen(List<GameObject> objects){
         for(GameObject object: objects){
             if(object.getType() == GameObject.ObjectType.TYPE_CIRCLE){
-                if((x <= 0 || x >= GameA.WIDTH-object.getW()) && (y < (HEIGHT/2)+75 && y > (HEIGHT/2)-99) ){
-                    velX = 0;
-                    velY = 0;
-                    x = GameA.WIDTH/2;
-                    y = GameA.HEIGHT/2;
-                }
+				if((x <= 0) && (y < (HEIGHT/2)+75 && y > (HEIGHT/2)-99))
+				{
+					//Reset ball velocity
+					velX = 0;
+					velY = 0;
+					//Rest ball position
+					x = GameA.WIDTH/2;
+					y = GameA.HEIGHT/2;
+					scoreRight++;
+					if(scoreRight >= 3)
+					{
+						JOptionPane.showMessageDialog(null, "Right side won!");
+						//TO-DO : RESET TO MAIN MENU AND RUN DATABASE QUERY.
+					}
+					System.out.println("LEFT : " + scoreLeft + " | RIGHT : " + scoreRight);
+				}
+				if((x >= GameA.WIDTH-object.getW()) && (y < (HEIGHT/2)+75 && y > (HEIGHT/2)-99))
+				{
+					//Reset ball position
+					velX = 0;
+					velY = 0;
+					//Reset ball velocity
+					x = GameA.WIDTH/2;
+					y = GameA.HEIGHT/2;
+					scoreLeft++;
+					if(scoreLeft >= 3)
+					{
+						JOptionPane.showMessageDialog(null, "Left side won!");
+						//TO-DO : RESET TO MAIN MENU AND RUN DATABASE QUERY.
+					}
+					System.out.println("LEFT : " + scoreLeft + " | RIGHT : " + scoreRight);
+				}
             }
         }
     }
