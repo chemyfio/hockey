@@ -3,15 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package objects;
+package id.game.objects;
 
-import core.Constants;
-import core.GameObject;
-import main.GameA;
-import static main.GameA.HEIGHT;
+
+import id.game.core.Constants;
+import id.game.core.GameObject;
+import id.game.main.GameA;
+import static id.game.main.GameA.HEIGHT;
+import id.sql.control.MatchHistoryBean;
+import id.sql.models.MatchHistory;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.sql.SQLException;
 import java.util.List;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,6 +29,9 @@ public class Circle extends GameObject{
 
     public float velX = 0f;
     public float velY = 0f;
+    public static int scoreLeft = 0;
+    public static int scoreRight = 0;
+    
 
     public Circle(float x, float y, int w, int h) {
         super(x, y, w, h, GameObject.ObjectType.TYPE_CIRCLE);
@@ -95,12 +106,57 @@ public class Circle extends GameObject{
     public void checkOutOfScreen(List<GameObject> objects){
         for(GameObject object: objects){
             if(object.getType() == GameObject.ObjectType.TYPE_CIRCLE){
-                if((x <= 0 || x >= GameA.WIDTH-object.getW()) && (y < (HEIGHT/2)+75 && y > (HEIGHT/2)-99) ){
-                    velX = 0;
-                    velY = 0;
-                    x = GameA.WIDTH/2;
-                    y = GameA.HEIGHT/2;
-                }
+
+				if((x <= 0) && (y < (HEIGHT/2)+75 && y > (HEIGHT/2)-99))
+				{
+					//Reset ball velocity
+					velX = 0;
+					velY = 0;
+					//Rest ball position
+					x = GameA.WIDTH/2;
+					y = GameA.HEIGHT/2;
+					//Increment score
+					scoreRight++;
+					//Run if Right side won.
+					if(scoreRight >= 3)
+					{
+						JOptionPane.showMessageDialog(null, "Right side won!");
+						//Upload result to database
+						MatchHistory matchReport = new MatchHistory("Specter2k11","Specter2k12",/*User 3*/null,/*User 4*/null, scoreLeft, scoreRight);
+						try {
+							new MatchHistoryBean().insertMatchHistory(matchReport);
+						} catch (SQLException ex) {
+							Logger.getLogger(Circle.class.getName()).log(Level.SEVERE, null, ex);
+						}
+						//TO-DO : RESET TO MAIN MENU.
+					}
+					System.out.println("LEFT : " + scoreLeft + " | RIGHT : " + scoreRight);
+				}
+				if((x >= GameA.WIDTH-object.getW()) && (y < (HEIGHT/2)+75 && y > (HEIGHT/2)-99))
+				{
+					//Reset ball position
+					velX = 0;
+					velY = 0;
+					//Reset ball velocity
+					x = GameA.WIDTH/2;
+					y = GameA.HEIGHT/2;
+					//Increment score.
+					scoreLeft++;
+					//Run if Left side wins.
+					if(scoreLeft >= 3)
+					{
+						JOptionPane.showMessageDialog(null, "Left side won!");
+						//Upload result to database
+						MatchHistory matchReport = new MatchHistory("Specter2k11","Specter2k12",/*User 3*/null,/*User 4*/null, scoreLeft, scoreRight);
+						try {
+							new MatchHistoryBean().insertMatchHistory(matchReport);
+						} catch (SQLException ex) {
+							Logger.getLogger(Circle.class.getName()).log(Level.SEVERE, null, ex);
+						}
+						//TO-DO : RESET TO MAIN MENU.
+					}
+					System.out.println("LEFT : " + scoreLeft + " | RIGHT : " + scoreRight);
+				}
             }
         }
     }

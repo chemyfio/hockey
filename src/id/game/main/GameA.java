@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main;
+package id.game.main;
 
-import core.Constants;
-import core.GameObject;
-import core.KeyHandler;
-import core.ObjectHandler;
-import objects.Box;
-import objects.Circle;
-import objects.Wall;
-import net.SIOClient;
+import id.game.core.Constants;
+import id.game.core.GameObject;
+import id.game.core.KeyHandler;
+import id.game.core.ObjectHandler;
+import id.game.objects.Box;
+import id.game.objects.Circle;
+import id.game.objects.Wall;
+import id.net.SIOClient;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;

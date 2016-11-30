@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package core;
+package id.game.core;
 
-import objects.Box;
+import id.game.objects.Box;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import main.GameA;
+import id.game.main.GameA;
 
 /**
  *

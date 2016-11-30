@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package objects;
+package id.game.objects;
 
-import core.Constants;
-import core.GameObject;
+import id.game.core.Constants;
+import id.game.core.GameObject;
 import java.awt.Graphics2D;
 import java.util.List;
 
