@@ -27,7 +27,7 @@ public class KeyHandler extends KeyAdapter {
         handler.removeKey(e.getKeyCode());
         
         for(GameObject object:handler.objects){
-            if(object.getType() == GameObject.ObjectType.PLAYER){
+            if(object.getType() == GameA.currentPlayer){
                 Box box = (Box) object;
 
                 if(e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN){
@@ -36,7 +36,7 @@ public class KeyHandler extends KeyAdapter {
                 if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_LEFT){
                     box.velX = 0;
                 }
-                GameA.sio.send("movingPaddle", box.velX,box.velY);
+                GameA.sio.send("movingPaddle", box.x,box.y,box.velX,box.velY);
             }
         }
 //        System.out.println(e.getKeyCode());
@@ -57,7 +57,7 @@ public class KeyHandler extends KeyAdapter {
      
     public void tick(){
         for(GameObject object: handler.objects){
-            if(object.getType() == GameObject.ObjectType.PLAYER){
+            if(object.getType() == GameA.currentPlayer){
                 Box box = (Box) object;
                 for(int key:handler.keys){
                     if(key == KeyEvent.VK_UP){
@@ -75,8 +75,9 @@ public class KeyHandler extends KeyAdapter {
                     if(key == KeyEvent.VK_LEFT){
                         box.velX = -5;
                     }
+                    GameA.sio.send("movingPaddle",box.x, box.y, box.velX, box.velY);
                 }
-                GameA.sio.send("movingPaddle", box.velX, box.velY);
+                
             }
         }
     }

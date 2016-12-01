@@ -19,8 +19,17 @@ public abstract class GameObject {
 //    public static final int TYPE_BOX2 = 2;
     
     public enum ObjectType{
-        TYPE_CIRCLE, PLAYER, WALL_UP, WALL_DOWN, WALL_LEFT, WALL_RIGHT;
+        TYPE_CIRCLE, 
+        WALL_UP, 
+        WALL_DOWN, 
+        WALL_LEFT, 
+        WALL_RIGHT,
+        PLAYER_1,
+        PLAYER_2,
+        PLAYER_3,
+        PLAYER_4;
     }
+    
     protected float x,y;
     protected int w, h;
     protected ObjectType type;

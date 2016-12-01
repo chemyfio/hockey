@@ -7,6 +7,7 @@ package id.game.main;
 
 import id.game.core.Constants;
 import id.game.core.GameObject;
+import id.game.core.GameObject.ObjectType;
 import id.game.core.KeyHandler;
 import id.game.core.ObjectHandler;
 import id.game.objects.Box;
@@ -37,8 +38,13 @@ public class GameA extends Canvas implements Runnable{
     private KeyHandler keyHandler;
     
     public static GameA game;
+    public static ObjectType currentPlayer;
     public Circle c1;
     public Box b1;
+    public Box b2;
+    public Box b3;
+    public Box b4;
+    
     public static SIOClient sio;
     public void init(){
         //init()
@@ -48,11 +54,12 @@ public class GameA extends Canvas implements Runnable{
         
         c1 = new Circle(WIDTH/2, HEIGHT/2, 50, 50);
         
-        b1 = new Box(50, 50, 90, 90, GameObject.ObjectType.PLAYER, Constants.FUI_ALIZARIN);
-        //Box b2 = new Box(WIDTH-100, 50, 90, 90, GameObject.ObjectType.PLAYER, Constants.FUI_AMETHYST);
         
-        //Box b3 = new Box(50, HEIGHT-200, 90, 90, GameObject.ObjectType.PLAYER, Constants.FUI_ASBESTOS);
-        //Box b4 = new Box(WIDTH-100, HEIGHT-200, 90, 90, GameObject.ObjectType.PLAYER, Constants.FUI_BELIZE_HOLE);
+        b1 = new Box(50, 50, 90, 90, GameObject.ObjectType.PLAYER_1, Constants.FUI_AMETHYST);
+        b2 = new Box(WIDTH-100, 50, 90, 90, GameObject.ObjectType.PLAYER_2, Constants.FUI_ASBESTOS);
+        
+        b3 = new Box(50, HEIGHT-200, 90, 90, GameObject.ObjectType.PLAYER_3, Constants.FUI_AMETHYST);
+        b4 = new Box(WIDTH-100, HEIGHT-200, 90, 90, GameObject.ObjectType.PLAYER_4, Constants.FUI_ASBESTOS);
         
         Wall wUp = new Wall(0, 0, WIDTH, 25, GameObject.ObjectType.WALL_UP);
         Wall wDown = new Wall(0, HEIGHT-25, WIDTH, 25, GameObject.ObjectType.WALL_DOWN);
@@ -63,9 +70,9 @@ public class GameA extends Canvas implements Runnable{
         
         handler.addObject(c1);
         handler.addObject(b1);
-        //handler.addObject(b2);
-        //handler.addObject(b3);
-        //handler.addObject(b4);
+        handler.addObject(b2);
+        handler.addObject(b3);
+        handler.addObject(b4);
         handler.addObject(wUp);
         handler.addObject(wDown);
         handler.addObject(wLeftUp);

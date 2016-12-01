@@ -52,7 +52,7 @@ public class Circle extends GameObject{
 //        playerComputer(objects);
         checkCollision(objects);
         checkOutOfScreen(objects);
-        GameA.sio.send("movingBall", velX, velY);
+        GameA.sio.send("movingBall",x, y, velX, velY);
     }
 
     public float getVelX() {
@@ -92,16 +92,7 @@ public class Circle extends GameObject{
         }        
     }
     
-    public void playerComputer(List<GameObject> objects){
-        
-        for(GameObject object: objects){
-            if(object.getType() == GameObject.ObjectType.PLAYER){
-                if(x >= object.getX()-300){
-                    object.setY(object.getY()+velY);
-                }
-            }
-        }
-    }
+
     
     public void checkOutOfScreen(List<GameObject> objects){
         for(GameObject object: objects){
@@ -162,7 +153,7 @@ public class Circle extends GameObject{
     }
     public void checkCollision(List<GameObject> objects){ //apakah circle bertumbukan dengan object lain?
         for(GameObject object: objects){
-            if(object.getType() == GameObject.ObjectType.PLAYER ){
+            if(object.getType() == GameObject.ObjectType.PLAYER_1 || object.getType() == GameObject.ObjectType.PLAYER_2 || object.getType() == GameObject.ObjectType.PLAYER_3 || object.getType() == GameObject.ObjectType.PLAYER_4){
                 if(object.getBound().intersects(getBoundsBottom())){
                     if(velY == 0)
                     {
@@ -206,18 +197,7 @@ public class Circle extends GameObject{
                         velX*=-1;
                     }
                 }
-            }else if(object.getType() == GameObject.ObjectType.PLAYER){
-                if(object.getBound().intersects(getBound())){
-                    
-                    if( x +w >= object.getX()){
-                        velX*=-1;
-                    }
-
-//                    if(y < object.getY() || y+h >= object.getY()){
-//                        velY*=-1;
-//                    }
-                }
-            } else if(object.getType() == GameObject.ObjectType.WALL_UP){
+            }else if(object.getType() == GameObject.ObjectType.WALL_UP){
                 if(object.getBound().intersects(getBound())){
                     if(y < object.getY()+25){
                         velY*=-1;
