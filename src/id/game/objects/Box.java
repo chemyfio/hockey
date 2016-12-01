@@ -22,14 +22,12 @@ public class Box extends GameObject{
     public float velX = 0;
     public float velY = 0;
     public Color c;
+    public boolean moving;
     
     public Box(float x, float y, int w, int h, ObjectType type, Color c) {
         super(x, y, w, h, type);
         this.c = c;
     }
-
-
-
     @Override
     public void render(Graphics2D g2d) {
         g2d.setColor(c);
@@ -68,6 +66,12 @@ public class Box extends GameObject{
     public void setVelY(float velY) {
         this.velY = velY;
     }
-    
-    
+
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
+    }
 }

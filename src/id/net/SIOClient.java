@@ -58,6 +58,24 @@ public class SIOClient {
                 }
             });
             
+            socket.on("", new Emitter.Listener() {
+                @Override
+                public void call(Object... os) {
+                    System.out.println("player - "+os[0].toString());
+                    switch(Integer.parseInt(os[0].toString())){
+                        case 0: game.currentPlayer = GameObject.ObjectType.PLAYER_1;
+                            break;
+                        case 1: game.currentPlayer = GameObject.ObjectType.PLAYER_2;
+                            break;
+                        case 2: game.currentPlayer = GameObject.ObjectType.PLAYER_3;
+                            break;
+                        case 3: game.currentPlayer = GameObject.ObjectType.PLAYER_4;
+                            break;
+                            
+                    }
+                }
+            });
+            
             socket.on("movingBall", new Emitter.Listener() {
                 @Override
                 public void call(Object... os) {
@@ -75,11 +93,11 @@ public class SIOClient {
                 public void call(Object... os) {
 //                    System.out.println(Float.parseFloat(os[0].toString()));
                     Box player;
-                    if(game.currentPlayer == GameObject.ObjectType.PLAYER_1){
+                    if(os[4].toString().equalsIgnoreCase("1")){
                         player = game.b1;
-                    }else if(game.currentPlayer == GameObject.ObjectType.PLAYER_2){
+                    }else if(os[4].toString().equalsIgnoreCase("2")){
                         player = game.b2;
-                    }else if(game.currentPlayer == GameObject.ObjectType.PLAYER_3){
+                    }else if(os[4].toString().equalsIgnoreCase("3")){
                         player = game.b3;
                     }else{
                         player = game.b4;
@@ -98,8 +116,11 @@ public class SIOClient {
         }
         
     }
-    
-    public void send(String param,float x, float y, float velX, float velY){
+    public void send(String param, float x, float y, float velX, float velY){
         socket.emit(param, x, y, velX, velY);
+    }
+    
+    public void send(String param, float x, float y, float velX, float velY, int indexPlayer){
+        socket.emit(param, x, y, velX, velY, indexPlayer);
     }
 }
